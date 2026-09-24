@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
+  //
   static ThemeData dark = ThemeData(
     scaffoldBackgroundColor: Color(0xff202020),
     appBarTheme: AppBarTheme(
