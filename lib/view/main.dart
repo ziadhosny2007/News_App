@@ -3,7 +3,6 @@ import 'package:news_app/core/api.dart';
 import 'package:news_app/view/home.dart';
 import 'package:news_app/view/theme.dart';
 
-
 Future<void> main() async {
   Api.getNews();
   runApp(const MyApp());

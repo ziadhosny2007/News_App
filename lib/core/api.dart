@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:news_app/core/news_model.dart';
-import 'package:news_app/core/result_api.dart';
+import 'package:news_app/data/news_model.dart';
+import 'package:news_app/data/result_api.dart';
 
 class Api {
   static Future<Result<NewsModel>> getNews() async {
