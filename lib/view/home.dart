@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/core/api.dart';
-import 'package:news_app/core/news_model.dart';
-import 'package:news_app/core/result_api.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/data/news_model.dart';
 import 'package:news_app/view/component/news_widget.dart';
+import 'package:news_app/view_model/bloc_news.dart';
+import 'package:news_app/view_model/news_state.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,44 +13,40 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String? error;
-  bool isLoading = true;
-  Future<void> getNews() async {
-    final result = await Api.getNews();
-    switch (result) {
-      case Success<NewsModel>():
-        articles = result.data.articles ?? [];
-
-        break;
-
-      case Error<NewsModel>():
-        error = result.error;
-    }
-
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  List<Article> articles = [];
-
-  @override
-  void initState() {
-    super.initState();
-    getNews();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("News App")),
-      body: (isLoading)
-          ? Center(child: CircularProgressIndicator())
-          : (error != null)
-          ? Center(
-              child: Text(error ?? "", style: TextStyle(color: Colors.red)),
-            )
-          : _SuccessView(length: articles.length, articles: articles),
+    return BlocProvider<BlocNews>(
+      create: (context) => BlocNews()..fetchNews(),
+
+      child: Scaffold(
+        appBar: AppBar(title: Text("News App")),
+        body: BlocBuilder<BlocNews, NewsState>(
+          builder: (context, state) {
+            switch (state) {
+              case LoadingNews():
+                return Center(child: CircularProgressIndicator());
+              case SuccessState():
+                return _SuccessView(
+                  length: state.articles.length,
+                  articles: state.articles,
+                );
+              case ErrorState():
+                return Center(
+                  child: Text(
+                    state.error,
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: .bold,
+                      fontSize: 24,
+                    ),
+                  ),
+                );
+              default:
+                return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+      ),
     );
   }
 }

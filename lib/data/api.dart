@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:news_app/core/news_model.dart';
-import 'package:news_app/core/result_api.dart';
+import 'package:news_app/data/news_model.dart';
+import 'package:news_app/data/result_api.dart';
 
 class Api {
   static Future<Result<NewsModel>> getNews() async {
@@ -12,7 +12,7 @@ class Api {
         "apiKey": "7ad658a02e214651ae8a230f5a3e514c",
       });
       var response = await http.get(url);
-      if (response.statusCode >= 200 && response.statusCode <= 300) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         var responseBody = response.body;
         var json = jsonDecode(responseBody);
 

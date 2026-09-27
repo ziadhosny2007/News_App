@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/core/news_model.dart';
+import 'package:news_app/data/news_model.dart';
 import 'package:news_app/view/details.dart';
 
 class NewsHome extends StatelessWidget {
