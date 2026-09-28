@@ -50,4 +50,4 @@ class NewsDetails extends StatelessWidget {
   }
 }
 
-String image = "I/i1.png";
+String image = "image/i1.png";
