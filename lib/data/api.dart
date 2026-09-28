@@ -12,7 +12,7 @@ class Api {
         "apiKey": "7ad658a02e214651ae8a230f5a3e514c",
       });
       var response = await http.get(url);
-      if (response.statusCode >= 200 && response.statusCode <= 300) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         var responseBody = response.body;
         var json = jsonDecode(responseBody);
 
